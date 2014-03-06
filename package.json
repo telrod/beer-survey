@@ -1,0 +1,12 @@
+{
+  "name"         : "beer-survey",
+  "version"      : "0.0.0",
+  "private"      : true,
+  "description"  : "Simple beer survey application.",
+  "main"         : "server.js",
+  "author"       : "telrod",
+  "dependencies" : {
+    "express"    : "~3.4.4",
+    "mysql"      : "~2.0"
+  }
+}
