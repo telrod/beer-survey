@@ -19,6 +19,8 @@ The web application built with Bootstrap, Angular, Node.js and MySQL.  Node prov
 
 ## References
 
-This code base borrows heavily from the node-todo project by scotch-io (https://github.com/scotch-io/node-todo)
+Live demo at running at (http://www.beersurvey.org/)
 
 ![beer-survey](http://i.imgur.com/x8vFlEQ.png)
+
+This code base borrows heavily from the node-todo project by scotch-io (https://github.com/scotch-io/node-todo)

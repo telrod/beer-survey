@@ -3,10 +3,23 @@
   "version"      : "0.0.0",
   "private"      : true,
   "description"  : "Simple beer survey application.",
+    "keywords": [
+        "beer",
+        "survey",
+        "angular",
+        "node",
+        "mysql"
+    ],
   "main"         : "server.js",
-  "author"       : "telrod",
+    "author": {
+        "name": "Tom Elrod",
+        "email": "tom.elrod@gmail.com",
+        "repository" : "github.com:telrod/beer-survey"
+    },
+  "readmeFilename": "README.md",
   "dependencies" : {
     "express"    : "~3.4.4",
-    "mysql"      : "~2.0"
+    "mysql"      : "~2.0",
+    "csv"        : "0.3.7"
   }
 }

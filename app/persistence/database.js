@@ -1,4 +1,6 @@
 var mysql = require('mysql');                           // mysql module
+var csv = require('csv');
+var fs = require('fs');
 
 var db = {};
 
@@ -33,28 +35,47 @@ db.connect = function (hostParam, userParam, passwordParam) {
                     + 'beer_id INT NOT NULL'
                     + ')', function (err) {
                     if (err) throw err;
-                    connection.query('INSERT IGNORE INTO beers (name, region) VALUES (\'Corona\',\'Mexico\')', function (err) {
-                        if (err) throw err;
-                        connection.query('INSERT IGNORE INTO beers (name, region) VALUES (\'Dos Equis\',\'Mexico\')', function (err) {
-                            if (err) throw err;
-                            connection.query('INSERT IGNORE INTO beers (name, region) VALUES (\'Pacifico\',\'Mexico\')', function (err) {
-                                if (err) throw err;
-                                connection.query('INSERT IGNORE INTO beers (name, region) VALUES (\'Stella Artois\',\'Belgium\')', function (err) {
-                                    if (err) throw err;
-                                    connection.query('INSERT IGNORE INTO beers (name, region) VALUES (\'Hoegaarden\',\'Belgium\')', function (err) {
-                                        if (err) throw err;
-                                        connection.query('INSERT IGNORE INTO beers (name, region) VALUES (\'Palm\',\'Belgium\')', function (err) {
-                                            if (err) throw err;
-                                        });
-                                    });
-                                });
-                            });
-                        });
-                    });
+                    loadBeers();
                 });
             });
         });
     })
+}
+
+loadBeers = function () {
+    console.log('Loading beers');
+
+    var __filename = './app/persistence/beers.csv';
+    csv().from.stream(fs.createReadStream(__filename)).transform(function (row) {
+        row.unshift(row.pop());
+        return row;
+    })
+        .on('record', function (row, index) {
+
+            var name = row[1];
+            var region = row[0];
+
+            if (index == 0) {
+                if (name == 'name' && region == 'region') {
+                    console.log('Correct header found, skipping..');
+                }
+                else {
+                    console.log('Correct header not found, should have name and region as header');
+                }
+            }
+            else {
+                console.log('Inserting beer: ' + name + ' with region: ' + region)
+                connection.query('INSERT IGNORE INTO beers (name, region) VALUES (\'' + name + '\',\'' + region + '\')', function (err) {
+                    if (err) throw err;
+                });
+            }
+        })
+        .on('end', function (count) {
+            console.log('Number of lines: ' + count);
+        })
+        .on('error', function (error) {
+            console.log(error.message);
+        });
 }
 
 db.findBeers = function (callback) {
