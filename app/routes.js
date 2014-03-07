@@ -1,4 +1,5 @@
 var db = require('./persistence/database');
+var geolocation = require('./geo/geolocation');
 
 module.exports = function (app) {
 
@@ -24,7 +25,23 @@ module.exports = function (app) {
     // create vote and send back all beers and vote tally after creation
     app.post('/api/vote', function (req, res) {
 
-        db.insertItem({text: req.body.id}, function (err, result) {
+        remote_ip = req.headers['x-forwarded-for'] ||
+            req.connection.remoteAddress ||
+            req.socket.remoteAddress ||
+            req.connection.socket.remoteAddress;
+        if('127.0.0.1' === remote_ip) {
+            remote_ip = '74.205.43.156';
+        }
+        geo = geolocation.getLocation(remote_ip);
+        //console.log(geo);
+        var country;
+        if (typeof geo === "undefined") {
+           country = "Unknown";
+        } else {
+         country = geo.country;
+        }
+
+        db.insertItem({text: req.body.id}, country, remote_ip, function (err, result) {
             if (err)
                 res.send(err);
 

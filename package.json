@@ -1,8 +1,8 @@
 {
-  "name"         : "beer-survey",
-  "version"      : "0.0.0",
-  "private"      : true,
-  "description"  : "Simple beer survey application.",
+    "name": "beer-survey",
+    "version": "0.0.0",
+    "private": true,
+    "description": "Simple beer survey application.",
     "keywords": [
         "beer",
         "survey",
@@ -10,16 +10,29 @@
         "node",
         "mysql"
     ],
-  "main"         : "server.js",
+    "main": "server.js",
     "author": {
         "name": "Tom Elrod",
         "email": "tom.elrod@gmail.com",
-        "repository" : "github.com:telrod/beer-survey"
+        "repository": "github.com:telrod"
     },
-  "readmeFilename": "README.md",
-  "dependencies" : {
-    "express"    : "~3.4.4",
-    "mysql"      : "~2.0",
-    "csv"        : "0.3.7"
-  }
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/telrod/beer-survey.git"
+    },
+    "readmeFilename": "README.md",
+    "dependencies": {
+        "express": "~3.4.4",
+        "mysql": "~2.0",
+        "csv": "0.3.7",
+        "geoip-lite": "1.1.1"
+    },
+    "licenses": [
+        {
+            "type": "Apache",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        }
+    ],
+    "engines": "node >= 0.8.9"
+
 }

@@ -31,6 +31,8 @@ db.connect = function (hostParam, userParam, passwordParam) {
                 if (err) throw err;
                 connection.query('CREATE TABLE IF NOT EXISTS votes('
                     + 'id INT NOT NULL AUTO_INCREMENT,'
+                    + 'country VARCHAR(250),'
+                    + 'ip VARCHAR(20),'
                     + 'PRIMARY KEY(id),'
                     + 'beer_id INT NOT NULL'
                     + ')', function (err) {
@@ -98,11 +100,11 @@ db.findVotes = function (callback) {
 
 }
 
-db.insertItem = function (item, callback) {
+db.insertItem = function (item, country, ip, callback) {
 
     console.log('item to insert:' + item.text);
 
-    connection.query('INSERT INTO votes SET ?', {beer_id: item.text}, function (err, result) {
+    connection.query('INSERT INTO votes (beer_id, country, ip) VALUES(?,?,?)', [item.text,country, ip], function (err, result) {
         if (err) throw err;
 
         console.log(result.insertId);
